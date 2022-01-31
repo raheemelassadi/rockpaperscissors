@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Rock Paper Scissors</title>
 </head>
 <body>
     <script>
@@ -12,11 +12,15 @@
         // player needs to make a move
         //compare the options and decide who is the winner
 
+        let playerScore = 0;
+        let computerScore = 0;
+        let roundNum = 0;
+        
 
         const gameMoves = ["rock", "paper", "scissors"];
         // computer chooses rock paper or scissors
         function computerPlay(){
-            
+
             // randomizes number from length of array
             let pickNum = (Math.floor(Math.random()*gameMoves.length));
             
@@ -25,30 +29,38 @@
             return randomize;
         };
 
-        const playerSelection = "rock";
-        const computerSelection = computerPlay();
+        let computerSelection = computerPlay();
+        let playerSelection = prompt("rock paper or scissors?").toLowerCase();
+        
 
-        function playRound (playerSelection, computerSelection){
+        function playRound (computerSelection, playerSelection){
+            let displayScore = "the score is " + "player: " + playerScore + " " + "computer: " + computerScore;
             //compare playerSelection to computerSelection
-            switch (computerSelection) {
-                case "rock": 
-                    console.log("its a tie!");
-                    break;
-                case "paper": 
-                    console.log("you lose! paper beats rock!!");
-                    break;
-                case "scissors": 
-                    console.log("you win! rock beats scissors!");
-                    break;
-                default: 
-                    console.log("you broke it");
+            if (playerSelection === "rock" && computerSelection === "rock"){
+                ++playerScore;
+                ++computerScore;
+                console.log("it was a tie! player: " + playerScore + " computer: " + computerScore);
+            } else if (playerSelection === "rock"){
+                switch(computerSelection){
+                    case "scissors":
+                        ++playerScore;
+                        console.log("player wins! player: " + playerScore + " computer: " + computerScore);
+                    case "paper": 
+                        ++computerScore;
+                        console.log("computer wins! player: " + playerScore + " computer: " + computerScore);
+                    default:
+                        
+                }
             }
+        
         };
 
-       
-        playRound(playerSelection, computerSelection);
-
+        playRound(computerSelection, playerSelection);
         
+        
+        //https://github.com/JunJunBahadur/rock-paper-scissors/blob/main/jquery.js
+        
+
     </script>
 </body>
 </html>
