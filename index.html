@@ -8,59 +8,89 @@
 </head>
 <body>
     <script>
-        //the computer needs to make a move
-        // player needs to make a move
-        //compare the options and decide who is the winner
-
-        let playerScore = 0;
-        let computerScore = 0;
-        let roundNum = 0;
         
 
-        const gameMoves = ["rock", "paper", "scissors"];
-        // computer chooses rock paper or scissors
-        function computerPlay(){
+    let playerScore = 0;
+    let computerScore = 0;
+    let draws = 0;
 
-            // randomizes number from length of array
-            let pickNum = (Math.floor(Math.random()*gameMoves.length));
-            
-            //uses pickNum to communicate the array index 
-            let randomize = gameMoves[pickNum];
-            return randomize;
-        };
+    //Computer choice
+    function computerPlay() {
+      let random = Math.random();
+      if (random <= 0.3333) {
+        return "paper";
+      } else if (random >= 0.6666) {
+        return "rock";
+      } else {
+        return "scissors";
+      }
+    }
 
-        let computerSelection = computerPlay();
-        let playerSelection = prompt("rock paper or scissors?").toLowerCase();
-        
+    //Plays one round of RPS
+    function playRound(playerChoice, computerSelection) {
+      if (playerChoice === computerSelection) {
+        return draw;
+      } else if (playerChoice === "rock" && computerSelection === "scissors") {
+        return playerWinRound;
 
-        function playRound (computerSelection, playerSelection){
-            let displayScore = "the score is " + "player: " + playerScore + " " + "computer: " + computerScore;
-            //compare playerSelection to computerSelection
-            if (playerSelection === "rock" && computerSelection === "rock"){
-                ++playerScore;
-                ++computerScore;
-                console.log("it was a tie! player: " + playerScore + " computer: " + computerScore);
-            } else if (playerSelection === "rock"){
-                switch(computerSelection){
-                    case "scissors":
-                        ++playerScore;
-                        console.log("player wins! player: " + playerScore + " computer: " + computerScore);
-                    case "paper": 
-                        ++computerScore;
-                        console.log("computer wins! player: " + playerScore + " computer: " + computerScore);
-                    default:
-                        
-                }
-            }
-        
-        };
+      } else if (playerChoice === "paper" && computerSelection === "rock") {
+        return playerWinRound;
 
-        playRound(computerSelection, playerSelection);
-        
-        
-        //https://github.com/JunJunBahadur/rock-paper-scissors/blob/main/jquery.js
-        
+      } else if (playerChoice === "scissors" && computerSelection === "paper") {
+        return playerWinRound;
 
+      } else {
+        return computerWinRound;
+
+      }
+    }
+
+    //Specifies round win/game win messages
+    let playerWinRound = "Player wins this round!"
+    let computerWinRound = "Computer wins this round!"
+    let draw = "Draw!"
+    let playerWin = "Player wins the game! Congratulations!"
+    let computerWin = "Computer wins the game! Congratulations!"
+
+
+    //For loop that plays multiple rounds
+    for (let i = 0; i < 1000; i++) {
+      let playerChoice = prompt("Rock, paper, or scissors?").toLowerCase();
+      const computerSelection = computerPlay();
+      let roundResult = playRound(playerChoice, computerSelection);
+      console.log(roundResult);
+      gameScore(roundResult);
+      console.log("Your score is " + playerScore);
+      console.log("The computer's score is " + computerScore);
+
+      if (playerScore === 5 || computerScore === 5) {
+        break;
+      }
+    }
+
+
+    //Keeps score and prints out correct messages based on score
+    function gameScore(result) {
+      
+
+      if (result === playerWinRound) {
+        playerScore++;
+      } else if (result === draw) {
+        draws++;
+      } else {
+        computerScore++;
+      }
+
+
+      if (playerScore === 5) {
+        console.log(playerWin);
+        return;
+      }
+      if (computerScore === 5) {
+        console.log(computerWin);
+        return;
+      }
+    }
     </script>
 </body>
 </html>
