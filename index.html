@@ -9,88 +9,59 @@
 <body>
     <script>
         
-
-    let playerScore = 0;
+    
+    let userScore = 0;
     let computerScore = 0;
-    let draws = 0;
+    let gameWon = false;
 
-    //Computer choice
+    
     function computerPlay() {
-      let random = Math.random();
-      if (random <= 0.3333) {
-        return "paper";
-      } else if (random >= 0.6666) {
-        return "rock";
-      } else {
-        return "scissors";
-      }
-    }
+      const choices = ['r', 'p', 's'];
+      const randomNum = Math.floor(Math.random() * 3);
+      return choices[randomNum];
+    };
 
-    //Plays one round of RPS
-    function playRound(playerChoice, computerSelection) {
-      if (playerChoice === computerSelection) {
-        return draw;
-      } else if (playerChoice === "rock" && computerSelection === "scissors") {
-        return playerWinRound;
-
-      } else if (playerChoice === "paper" && computerSelection === "rock") {
-        return playerWinRound;
-
-      } else if (playerChoice === "scissors" && computerSelection === "paper") {
-        return playerWinRound;
-
-      } else {
-        return computerWinRound;
-
-      }
-    }
-
-    //Specifies round win/game win messages
-    let playerWinRound = "Player wins this round!"
-    let computerWinRound = "Computer wins this round!"
-    let draw = "Draw!"
-    let playerWin = "Player wins the game! Congratulations!"
-    let computerWin = "Computer wins the game! Congratulations!"
-
-
-    //For loop that plays multiple rounds
-    for (let i = 0; i < 1000; i++) {
-      let playerChoice = prompt("Rock, paper, or scissors?").toLowerCase();
-      const computerSelection = computerPlay();
-      let roundResult = playRound(playerChoice, computerSelection);
-      console.log(roundResult);
-      gameScore(roundResult);
-      console.log("Your score is " + playerScore);
-      console.log("The computer's score is " + computerScore);
-
-      if (playerScore === 5 || computerScore === 5) {
+    function playRound(playerChoice) {
+     const computerSelection = computerPlay();
+     switch (playerChoice + computerSelection){
+      case "rs":
+      case "sp":
+      case "pr":
+        console.log('user wins this round!');
+        userScore++;
         break;
-      }
-    }
-
-
-    //Keeps score and prints out correct messages based on score
-    function gameScore(result) {
-      
-
-      if (result === playerWinRound) {
-        playerScore++;
-      } else if (result === draw) {
-        draws++;
-      } else {
+      case "rp":
+      case "ps":  
+      case "sr":
+        console.log('computer wins this round!');
         computerScore++;
-      }
-
-
-      if (playerScore === 5) {
-        console.log(playerWin);
-        return;
-      }
-      if (computerScore === 5) {
-        console.log(computerWin);
-        return;
-      }
+        break;
+      case "rr":
+      case "ss":
+      case "pp":
+        console.log('its a draw!');
+        computerScore++;
+        userScore++;
     }
+    };
+
+    function game(){
+      while (!gameWon) {
+        let playerChoice = prompt('r, p, s', 'enter your choice').toLowerCase();
+        playRound(playerChoice);
+
+        if (userScore === 5){
+          gameWon = true;
+          console.log('user has won the game!');
+        } else if (computerScore === 5){
+          gameWon = true;
+          console.log('computer has won the game!')
+        } else false;
+      } 
+    };
+  
+    game();
+ 
     </script>
 </body>
 </html>
