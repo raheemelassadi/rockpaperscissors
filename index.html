@@ -12,6 +12,7 @@
   <button id='p'>paper</button>
   <button id='s'>scissors</button>
   <div id="result"></div>
+  <div id="score"></div>
 
     <script>
   
@@ -48,10 +49,15 @@
       game();
     });
 
-    let getDiv = document.querySelector('#result');
-    let roundResult = "";
-    let container = document.createElement('p');
+    const getDiv = document.querySelector('#result');
+    const container = document.createElement('p');
     container.innerHTML = "user wins";
+
+    const score = document.querySelector('#score');
+    const scoreContainer = document.createElement('p');
+   
+    
+
 
     function playRound() {
      const computerSelection = computerPlay();
@@ -62,6 +68,8 @@
         container.innerHTML = "user wins!";
         getDiv.appendChild(container);
         userScore++;
+        scoreContainer.innerHTML = `user: ${userScore} computer: ${computerScore}`;
+        score.appendChild(scoreContainer);
         console.log('user');
         break;
       case "rp":
@@ -71,6 +79,8 @@
         getDiv.appendChild(container);
         console.log('computer');
         computerScore++;
+        scoreContainer.innerHTML = `user: ${userScore} computer: ${computerScore}`;
+        score.appendChild(scoreContainer);
         break;
       case "rr":
       case "ss":
@@ -80,6 +90,8 @@
         console.log('draw');
         computerScore++;
         userScore++;
+        scoreContainer.innerHTML = `user: ${userScore} computer: ${computerScore}`;
+        score.appendChild(scoreContainer);
     }
     };
 
