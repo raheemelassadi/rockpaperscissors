@@ -11,6 +11,7 @@
   <button id='r'>rock</button>
   <button id='p'>paper</button>
   <button id='s'>scissors</button>
+  <div id="result"></div>
 
     <script>
   
@@ -18,7 +19,7 @@
     let userScore = 0;
     let computerScore = 0;
     let gameWon = false;
-
+    let playerChoice = '';
     
     function computerPlay() {
       const choices = ['r', 'p', 's'];
@@ -26,51 +27,78 @@
       return choices[randomNum];
     };
 
-    function playRound(playerChoice) {
+    let rBtn = document.querySelector('#r');
+    rBtn.addEventListener('click', () => {
+      playerChoice = 'r';
+      playRound(playerChoice);
+      game();
+    });
+
+    let pBtn = document.querySelector('#p');
+    pBtn.addEventListener('click', () => {
+      playerChoice = 'p';
+      playRound(playerChoice);
+      game();
+    });
+
+    let sBtn = document.querySelector('#s');
+    sBtn.addEventListener('click', () => {
+      playerChoice = 's';
+      playRound(playerChoice);
+      game();
+    });
+
+    let getDiv = document.querySelector('#result');
+    let roundResult = "";
+    let container = document.createElement('p');
+    container.innerHTML = "user wins";
+
+    function playRound() {
      const computerSelection = computerPlay();
      switch (playerChoice + computerSelection){
       case "rs":
       case "sp":
       case "pr":
-        console.log('user wins this round!');
+        container.innerHTML = "user wins!";
+        getDiv.appendChild(container);
         userScore++;
+        console.log('user');
         break;
       case "rp":
       case "ps":  
       case "sr":
-        console.log('computer wins this round!');
+        container.innerHTML = "computer wins";
+        getDiv.appendChild(container);
+        console.log('computer');
         computerScore++;
         break;
       case "rr":
       case "ss":
       case "pp":
-        console.log('its a draw!');
+        container.innerHTML = "draw!";
+        getDiv.appendChild(container);
+        console.log('draw');
         computerScore++;
         userScore++;
     }
     };
 
-
-
-
+    function reset(){
+      userScore = 0;
+      computerScore = 0;
+    }
 
     function game(){
-      while (!gameWon) {
-        let playerChoice = prompt('r, p, s', 'enter your choice').toLowerCase();
-        playRound(playerChoice);
-
         if (userScore === 5){
           gameWon = true;
-          console.log('user has won the game!');
+          alert('user has won the game!');
+          reset();
         } else if (computerScore === 5){
           gameWon = true;
-          console.log('computer has won the game!')
-        } else false;
-      } 
+          alert('computer has won the game!')
+          reset();
+        } else gameWon = false;
     };
-  
-    game();
- 
     </script>
 </body>
 </html>
